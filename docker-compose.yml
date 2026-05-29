@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+      - VITE_JAVA_API_URL=http://localhost:8080
+
+  backend-python:
+    build: ./backend-python
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend-python:/app
+    environment:
+      - DATABASE_URL=sqlite:///./test.db
+
+  backend-java:
+    build: ./backend-java
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend-java:/app
+
+  rust-service:
+    build: ./rust-module
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./rust-module:/app
