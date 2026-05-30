@@ -36,7 +36,7 @@ const { currentTheme, themeMode, toggleTheme } = useTheme()
               <li><a href="/blog">技术博客</a></li>
               <li><a href="/snippets">代码片段</a></li>
               <li><a href="/about">关于我们</a></li>
-              <li><a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="https://github.com/lijinbo-max/devshare" target="_blank" rel="noopener noreferrer">GitHub</a></li>
             </ul>
           </nav>
         </div>
@@ -54,7 +54,7 @@ const { currentTheme, themeMode, toggleTheme } = useTheme()
             </a>
           </div>
           <div class="social-links">
-            <a href="https://github.com" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a href="https://github.com/lijinbo-max/devshare" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.09.682-.216.682-.487 0-.237-.009-.868-.013-1.7-2.782.603-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.031 1.531 1.031.892 1.53 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.113-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.272.098-2.647 0 0 .84-.269 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.114 2.504.336 1.909-1.295 2.747-1.026 2.747-1.026.546 1.375.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .277.18.589.688.481C19.138 20.176 22 16.438 22 12.017 22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
               </svg>

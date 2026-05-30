@@ -229,7 +229,7 @@ curl http://localhost:8081/compute/fibonacci/40
 
 如有问题或建议，请通过以下方式联系：
 
-- 项目地址: [https://github.com/yourusername/devshare](https://github.com/yourusername/devshare)
+- 项目地址: [https://github.com/lijinbo-max/devshare](https://github.com/lijinbo-max/devshare)
 - 邮箱: devshare@example.com
 - 在线演示: https://ljbljb.com
 

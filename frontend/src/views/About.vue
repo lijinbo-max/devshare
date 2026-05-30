@@ -108,7 +108,7 @@ const techStack = [
           <h2>个人编程分享</h2>
           <p>热爱编程，乐于分享。这个平台展示了如何使用多种编程语言构建一个现代化的全栈应用。</p>
           <div class="social-links">
-            <a href="#" class="social-link haptic">GitHub</a>
+            <a href="https://github.com/lijinbo-max/devshare" class="social-link haptic">GitHub</a>
             <a href="#" class="social-link haptic">Twitter</a>
             <a href="#" class="social-link haptic">LinkedIn</a>
           </div>

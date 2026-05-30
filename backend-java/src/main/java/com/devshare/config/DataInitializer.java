@@ -22,7 +22,7 @@ public class DataInitializer implements CommandLineRunner {
             admin.setName("DevShare");
             admin.setEmail("admin@devshare.com");
             admin.setBio("热爱编程，乐于分享。这个平台展示了如何使用多种编程语言构建一个现代化的全栈应用。");
-            admin.setGithub("https://github.com/devshare");
+            admin.setGithub("https://github.com/lijinbo-max/devshare");
             admin.setAvatar("D");
             userRepository.save(admin);
         }
