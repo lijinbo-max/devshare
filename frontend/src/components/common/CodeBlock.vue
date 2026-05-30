@@ -1,5 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, watch, nextTick } from 'vue'
+import Prism from 'prismjs'
+import 'prismjs/themes/prism-tomorrow.css'
+import 'prismjs/components/prism-python'
+import 'prismjs/components/prism-rust'
+import 'prismjs/components/prism-typescript'
+import 'prismjs/components/prism-javascript'
+import 'prismjs/components/prism-java'
+import 'prismjs/components/prism-go'
+import 'prismjs/components/prism-cpp'
+import 'prismjs/components/prism-ruby'
+import 'prismjs/components/prism-markup'
+import 'prismjs/components/prism-css'
+import 'prismjs/components/prism-php'
+import 'prismjs/components/prism-swift'
+import 'prismjs/components/prism-kotlin'
+import 'prismjs/components/prism-scala'
 
 const props = defineProps<{
   code: string
@@ -7,17 +23,14 @@ const props = defineProps<{
 }>()
 
 const copied = ref(false)
+const codeRef = ref<HTMLElement | null>(null)
 
-const copyCode = async () => {
-  try {
-    await navigator.clipboard.writeText(props.code)
-    copied.value = true
-    setTimeout(() => {
-      copied.value = false
-    }, 2000)
-  } catch (err) {
-    console.error('Failed to copy:', err)
-  }
+const languageAliases: Record<string, string> = {
+  'C++': 'cpp',
+  'TypeScript': 'typescript',
+  'JavaScript': 'javascript',
+  'HTML': 'markup',
+  'CSS': 'css'
 }
 
 const getLanguageColor = (language: string) => {
@@ -40,13 +53,36 @@ const getLanguageColor = (language: string) => {
   return colors[language] || '#06b6d4'
 }
 
-const highlightCode = (code: string) => {
-  let decodedCode = code
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&')
-  
-  return decodedCode
+const getLanguageAlias = (language: string) => {
+  return languageAliases[language] || language.toLowerCase()
+}
+
+const highlightCode = () => {
+  nextTick(() => {
+    if (codeRef.value) {
+      Prism.highlightElement(codeRef.value)
+    }
+  })
+}
+
+onMounted(() => {
+  highlightCode()
+})
+
+watch(() => props.code, () => {
+  highlightCode()
+})
+
+const copyCode = async () => {
+  try {
+    await navigator.clipboard.writeText(props.code)
+    copied.value = true
+    setTimeout(() => {
+      copied.value = false
+    }, 2000)
+  } catch (err) {
+    console.error('Failed to copy:', err)
+  }
 }
 </script>
 
@@ -80,7 +116,7 @@ const highlightCode = (code: string) => {
       </div>
     </div>
     <div class="code-body">
-      <pre><code v-html="highlightCode(code)"></code></pre>
+      <pre><code ref="codeRef" :class="`language-${getLanguageAlias(language)}`">{{ code }}</code></pre>
     </div>
     <div class="copy-toast" v-if="copied">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -98,6 +134,7 @@ const highlightCode = (code: string) => {
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   font-family: var(--font-mono);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] .code-block {
@@ -187,7 +224,7 @@ const highlightCode = (code: string) => {
 }
 
 .code-body {
-  max-height: 400px;
+  max-height: 500px;
   overflow-y: auto;
 }
 
@@ -200,35 +237,69 @@ const highlightCode = (code: string) => {
 .code-body code {
   font-size: 0.85rem;
   line-height: 1.6;
-  color: #d4d4d4;
 }
 
-[data-theme="dark"] .code-body code {
-  color: #c9d1d9;
-}
-
-.code-body .keyword {
-  color: #569cd6;
-}
-
-.code-body .type {
-  color: #4ec9b0;
-}
-
-.code-body .string {
-  color: #ce9178;
-}
-
-.code-body .comment {
+.code-body :deep(.token.comment),
+.code-body :deep(.token.prolog),
+.code-body :deep(.token.doctype),
+.code-body :deep(.token.cdata) {
   color: #6a9955;
   font-style: italic;
 }
 
-.code-body .number {
+.code-body :deep(.token.punctuation) {
+  color: #d4d4d4;
+}
+
+.code-body :deep(.token.namespace) {
+  opacity: 0.7;
+}
+
+.code-body :deep(.token.property),
+.code-body :deep(.token.tag),
+.code-body :deep(.token.constant),
+.code-body :deep(.token.symbol),
+.code-body :deep(.token.deleted) {
+  color: #c586c0;
+}
+
+.code-body :deep(.token.boolean),
+.code-body :deep(.token.number) {
   color: #b5cea8;
 }
 
-.code-body .identifier {
+.code-body :deep(.token.selector),
+.code-body :deep(.token.attr-name),
+.code-body :deep(.token.string),
+.code-body :deep(.token.char),
+.code-body :deep(.token.builtin),
+.code-body :deep(.token.inserted) {
+  color: #ce9178;
+}
+
+.code-body :deep(.token.operator),
+.code-body :deep(.token.entity),
+.code-body :deep(.token.url),
+.code-body :deep(.language-css .token.string),
+.code-body :deep(.style .token.string) {
+  color: #d4d4d4;
+}
+
+.code-body :deep(.token.atrule),
+.code-body :deep(.token.attr-value),
+.code-body :deep(.token.keyword) {
+  color: #569cd6;
+}
+
+.code-body :deep(.token.function) {
+  color: #dcdcaa;
+}
+
+.code-body :deep(.token.class-name) {
+  color: #4ec9b0;
+}
+
+.code-body :deep(.token.variable) {
   color: #9cdcfe;
 }
 

@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5273:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8100
+      - VITE_JAVA_API_URL=http://localhost:8180
+    container_name: devshare_frontend_ljbljb
+    restart: unless-stopped
+
+  backend-python:
+    build: ./backend-python
+    ports:
+      - "8100:8000"
+    volumes:
+      - ./backend-python:/app
+      - ljbljb_com_python_data:/app/data
+    environment:
+      - DATABASE_URL=sqlite:///./data/devshare.db
+    container_name: devshare_python_ljbljb
+    restart: unless-stopped
+
+  backend-java:
+    build: ./backend-java
+    ports:
+      - "8180:8080"
+    volumes:
+      - ./backend-java:/app
+      - ljbljb_com_java_data:/app/data
+    container_name: devshare_java_ljbljb
+    restart: unless-stopped
+
+  rust-service:
+    build: ./rust-module
+    ports:
+      - "8181:8081"
+    volumes:
+      - ./rust-module:/app
+    container_name: devshare_rust_ljbljb
+    restart: unless-stopped
+
+volumes:
+  ljbljb_com_python_data:
+    name: ljbljb_com_python_data
+  ljbljb_com_java_data:
+    name: ljbljb_com_java_data

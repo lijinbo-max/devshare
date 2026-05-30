@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Header from './layouts/Header.vue'
+import BackToTop from './components/common/BackToTop.vue'
 import { useTheme } from './hooks'
 
 const { currentTheme, themeMode, toggleTheme } = useTheme()
@@ -73,6 +74,7 @@ const { currentTheme, themeMode, toggleTheme } = useTheme()
         </div>
       </div>
     </footer>
+    <BackToTop />
   </div>
 </template>
 
